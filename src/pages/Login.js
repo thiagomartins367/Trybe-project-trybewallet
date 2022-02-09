@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { saveUserEmailInReduxStore } from '../actions';
 
 class Login extends React.Component {
   constructor () {
@@ -31,13 +33,15 @@ class Login extends React.Component {
   }
 
   render() {
-    const { disabledButton } = this.state;
+    const { userEmail, userPassword, disabledButton } = this.state;
+    const { saveUserEmail } = this.props;
     return (
       <section>
         <input
           type="email"
           onChange={ this.handlerInput }
           name="userEmail"
+          value={ userEmail }
           placeholder="Email"
           data-testid="email-input"
         />
@@ -46,17 +50,22 @@ class Login extends React.Component {
           type="password"
           onChange={ this.handlerInput }
           name="userPassword"
+          value={ userPassword }
           placeholder="Senha"
           data-testid="password-input"
         />
         <br />
         <Link to="/carteira">
-          <button type="button" disabled={ disabledButton }>Entrar</button>
+          <button type="button" disabled={ disabledButton } onClick={() => saveUserEmail(this.state) }>Entrar</button>
         </Link>
       </section>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  saveUserEmail: ({ userEmail }) => dispatch(saveUserEmailInReduxStore(userEmail)),
+})
 
 // const defaultEmailFormat = /\S+@\S+\.\S+/; // <----- Estas 2 linhas de  código foram retiradas do Artigo:
 // validateEmailFormat = defaultEmailFormat.test(newEmail); // <--- https://www.horadecodar.com.br/2020/09/07/expressao-regular-para-validar-e-mail-javascript-regex
@@ -67,4 +76,4 @@ class Login extends React.Component {
 // faça parte dos quantificadores. Link: https://medium.com/@wilfison/maneira-mais-f%C3%A1cil-de-lembrar-express%C3%B5es-regulares-regex-8a7edfbe669d
 // "@" Indica que quero que o caractere "@" faça parte do formato padrão.
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);
