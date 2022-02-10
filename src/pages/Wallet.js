@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchAwesomeAPI } from '../actions';
 import ExpenseRecord from '../components/ExpenseRecord';
-import Header from '../components/Header';
+import TableOfExpenses from '../components/TableOfExpenses';
+import Header from '../components/TotalExpenseHeader';
 
 class Wallet extends React.Component {
   render() {
@@ -14,6 +15,8 @@ class Wallet extends React.Component {
         <br />
         <br />
         <ExpenseRecord />
+        <hr />
+        <TableOfExpenses />
       </main>
     );
   }

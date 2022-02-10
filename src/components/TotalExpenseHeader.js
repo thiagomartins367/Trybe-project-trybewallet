@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Header extends Component {
-  constructor () {
-    super();
-  }
-
   sumExpensesToTheTotal = () => {
     const {
       expensesRedux,
@@ -20,6 +16,7 @@ class Header extends Component {
       // console.log(`Valor em BRL: `, Number(exchangeRates[currency].ask) * value);
       const quoteInBRL = Number(exchangeRates[currency].ask);
       totalExpensesInBRL += value * quoteInBRL;
+      return '';
     });
     return totalExpensesInBRL;
   }
