@@ -13,8 +13,8 @@ class ExpenseRecord extends Component {
       value: '',
       description: '',
       currency: '',
-      method: '',
-      tag: '',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
       exchangeRates: {}
     }
   }
@@ -22,10 +22,11 @@ class ExpenseRecord extends Component {
   handlerInput = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value });
+    // console.log(value)
   }
 
   saveUsedCurrencyQuote = async () => {
-    const { saveExpenseInRedux, expensesRedux } = this.props;
+    const { saveExpenseInRedux, expensesRedux, currencyOptions } = this.props;
     const expenseIds = [];
     // console.log('expensesRedux: ', expensesRedux);
     if (expensesRedux.length > 0) {
@@ -43,21 +44,21 @@ class ExpenseRecord extends Component {
       const response = await fetch('https://economia.awesomeapi.com.br/json/all');
       const quoteData = await response.json();
       this.setState({ exchangeRates: quoteData }, () => {
-        console.log('quoteData SAVED: ', quoteData);
+        // console.log('quoteData SAVED: ', quoteData);
         saveExpenseInRedux(this.state);
         this.setState({
           id: '',
           value: '',
           description: '',
-          currency: '',
-          method: '',
-          tag: '',
+          currency: currencyOptions[0],
+          method: 'Dinheiro',
+          tag: 'Alimentação',
           exchangeRates: {}
         });
       });
     } catch (error) {
       console.log('---> *API REQUEST ERROR*\n \n', error);
-      window.alert('API REQUEST ERROR, Look at browser console');
+      // window.alert('API REQUEST ERROR, Look at browser console');
     }
   }
 
@@ -65,6 +66,13 @@ class ExpenseRecord extends Component {
     const { currencyOptions } = this.props;
     const { value, description } = this.state;
     // console.log('currencyOptions1: ', currencyOptions);
+    const event = {
+      target: {
+        name: 'currency',
+        value: currencyOptions[0],
+      }
+    }
+    window.onload = () => this.handlerInput(event);
     return (
       <section>
         <form>

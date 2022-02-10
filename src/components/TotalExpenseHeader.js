@@ -14,6 +14,7 @@ class Header extends Component {
       // console.log('Valor: ', value);
       // console.log('Moeda: ', currency);
       // console.log(`Valor em BRL: `, Number(exchangeRates[currency].ask) * value);
+      // console.log('exchangeRates: ', exchangeRates);
       const quoteInBRL = Number(exchangeRates[currency].ask);
       totalExpensesInBRL += value * quoteInBRL;
       return '';
