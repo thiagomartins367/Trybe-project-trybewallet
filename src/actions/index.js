@@ -2,6 +2,7 @@ import { USER_EMAIL } from '../reducers/user';
 
 export const COINS = 'COINS';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const saveUserEmailInReduxStore = (email) => ({
   type: USER_EMAIL,
@@ -39,3 +40,11 @@ export const saveExpenseInRedux = (expense) => ({
   type: ADD_EXPENSE,
   expense,
 });
+
+export const deleteExpense = (expenses, idExpense) => {
+  const filteredExpenses = expenses.filter((expenseObject) => expenseObject.id !== idExpense);
+  return {
+    type: DELETE_EXPENSE,
+    filteredExpenses,
+  }
+};

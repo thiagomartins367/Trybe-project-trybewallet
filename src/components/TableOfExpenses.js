@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { deleteExpense } from '../actions';
 
 class TableOfExpenses extends Component {
-
   convertAndFormatExpenses = (objectElement) => {
-    const { description, tag, method, value, currency, exchangeRates } = objectElement;
+    const { deleteExpense, expensesRedux } = this.props;
+    const { description, tag, method, value, currency, exchangeRates, id } = objectElement;
     const conversion = value * Number(exchangeRates[currency].ask);
     const convertedValueInBRL = Math.round(conversion * 100) / 100;
     // console.log('BRL: ', conversion.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }));
@@ -19,12 +20,17 @@ class TableOfExpenses extends Component {
     // });
     // return totalExpensesInBRL;
     return (
-      <tr key={ `${value} ${currency} - ${tag} - ${convertedValueInBRL} BRL` } className="tr-expense">
+      <tr
+        key={`${value} ${currency} - ${tag} - ${convertedValueInBRL} BRL`}
+        className="tr-expense"
+      >
         <td className="td-expense">{description}</td>
         <td className="td-expense">{tag}</td>
         <td className="td-expense">{method}</td>
         <td className="td-expense">{Number(value).toFixed(2)}</td>
-        <td className="td-expense">{exchangeRates[currency].name.replace('/Real Brasileiro', '')}</td>
+        <td className="td-expense">
+          {exchangeRates[currency].name.replace("/Real Brasileiro", "")}
+        </td>
         <td className="td-expense">
           {/* <span>R$ </span> */}
           {Math.round(Number(exchangeRates[currency].ask) * 100) / 100}
@@ -34,9 +40,17 @@ class TableOfExpenses extends Component {
           {convertedValueInBRL}
         </td>
         <td className="td-expense">Real</td>
-        <td className="td-expense"><button type="button">Editar</button></td>
+        <td className="td-expense">
+          <button
+            type="button"
+            onClick={() => deleteExpense(expensesRedux, id)}
+            data-testid="delete-btn"
+          >
+            Deletar
+          </button>
+        </td>
       </tr>
-    )
+    );
   }
 
   render() {
@@ -74,4 +88,8 @@ const mapStateToProps = (reduxStore) => ({
   expensesRedux: reduxStore.wallet.expenses,
 });
 
-export default connect(mapStateToProps, null)(TableOfExpenses);
+const mapDispatchToProps = (dispatch) => ({
+  deleteExpense: (expenses, idExpense) => dispatch(deleteExpense(expenses, idExpense))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableOfExpenses);
