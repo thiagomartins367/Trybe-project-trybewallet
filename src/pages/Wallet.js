@@ -1,14 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { fetchAwesomeAPI } from '../actions';
+import ExpenseRecord from '../components/ExpenseRecord';
 import Header from '../components/Header';
 
 class Wallet extends React.Component {
   render() {
-    const { userEmail } = this.props;
+    const { userEmail, fetchAPI } = this.props;
+    window.onload = fetchAPI();
     return (
       <main>
         <Header userEmail={ userEmail }/>
-        <span>Bem-Vindo a Wallet</span>
+        <br />
+        <br />
+        <ExpenseRecord />
       </main>
     );
   }
@@ -16,6 +21,10 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (reduxState) => ({
   userEmail: reduxState.user.email,
-})
+});
 
-export default connect(mapStateToProps, null)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  fetchAPI: () => dispatch(fetchAwesomeAPI()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

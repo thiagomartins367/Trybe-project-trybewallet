@@ -23,14 +23,20 @@ class Login extends React.Component {
 
   validateEmailAndPasswordFields = () => {
     const { userEmail, userPassword } = this.state;
-    const defaultEmailFormat = /\S+@\S+\.\S+/;
-    const validateEmailFormat = defaultEmailFormat.test(userEmail);
+    const defaultEmailFormat = /\S+@\S+\.\S+/; // <----- Estas 2 linhas de  código foram retiradas do Artigo:
+    const validateEmailFormat = defaultEmailFormat.test(userEmail); // <--- https://www.horadecodar.com.br/2020/09/07/expressao-regular-para-validar-e-mail-javascript-regex
     if (validateEmailFormat === true && userPassword.length >= 6) {
       this.setState({ disabledButton: false });
     } else {
       this.setState({ disabledButton: true });
     }
   }
+
+  // "+": Corresponde ao caractere anterior uma ou mais vezes. Link: https://www.devmedia.com.br/iniciando-expressoes-regulares/6557
+  // "\S" Corresponde a qualquer coisa menos um espaço em branco, de acordo com esta referência: http://www.javascriptkit.com/javatutors/redev2.shtml .
+  // "\." Serve para indicar que quero literalmente que o caractere "." faça parte do formato padrão e não que
+  // faça parte dos quantificadores. Link: https://medium.com/@wilfison/maneira-mais-f%C3%A1cil-de-lembrar-express%C3%B5es-regulares-regex-8a7edfbe669d
+  // "@" Indica que quero que o caractere "@" faça parte do formato padrão.
 
   render() {
     const { userEmail, userPassword, disabledButton } = this.state;
@@ -56,7 +62,13 @@ class Login extends React.Component {
         />
         <br />
         <Link to="/carteira">
-          <button type="button" disabled={ disabledButton } onClick={() => saveUserEmail(this.state) }>Entrar</button>
+          <button
+            type="button"
+            disabled={ disabledButton }
+            onClick={() => saveUserEmail(this.state)}
+          >
+            Entrar
+          </button>
         </Link>
       </section>
     );
@@ -65,15 +77,6 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   saveUserEmail: ({ userEmail }) => dispatch(saveUserEmailInReduxStore(userEmail)),
-})
-
-// const defaultEmailFormat = /\S+@\S+\.\S+/; // <----- Estas 2 linhas de  código foram retiradas do Artigo:
-// validateEmailFormat = defaultEmailFormat.test(newEmail); // <--- https://www.horadecodar.com.br/2020/09/07/expressao-regular-para-validar-e-mail-javascript-regex
-
-// "+": Corresponde ao caractere anterior uma ou mais vezes. Link: https://www.devmedia.com.br/iniciando-expressoes-regulares/6557
-// "\S" Corresponde a qualquer coisa menos um espaço em branco, de acordo com esta referência: http://www.javascriptkit.com/javatutors/redev2.shtml .
-// "\." Serve para indicar que quero literalmente que o caractere "." faça parte do formato padrão e não que
-// faça parte dos quantificadores. Link: https://medium.com/@wilfison/maneira-mais-f%C3%A1cil-de-lembrar-express%C3%B5es-regulares-regex-8a7edfbe669d
-// "@" Indica que quero que o caractere "@" faça parte do formato padrão.
+});
 
 export default connect(null, mapDispatchToProps)(Login);

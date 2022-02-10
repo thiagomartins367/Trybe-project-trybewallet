@@ -1,4 +1,4 @@
-// Esse reducer será responsável por tratar as informações da pessoa usuária.replace(/[^0-9,]*/g, '').replace(',', '.')
+// Esse reducer será responsável por tratar as informações da pessoa usuária.
 
 const INITIAL_STATE = {
   email: '',
