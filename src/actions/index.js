@@ -25,18 +25,15 @@ const saveCurrencyInStoreRedux = (data) => {
   return {
     type: COINS,
     data: dataFormatted,
-  }
-}
+  };
+};
 
-export const fetchAwesomeAPI = () => {
-  // console.log('chamou fetchAwesomeAPI');
-  return (dispatch) => {
-    return fetch('https://economia.awesomeapi.com.br/json/all')
+export const fetchAwesomeAPI = () =>
+  (dispatch) =>
+    fetch('https://economia.awesomeapi.com.br/json/all')
       .then((resonse) => resonse.json())
       .then((data) => dispatch(saveCurrencyInStoreRedux(data)))
       .catch((error) => error);
-  }
-}
 
 export const saveExpenseInRedux = (expense) => ({
   type: ADD_EXPENSE,
@@ -44,11 +41,13 @@ export const saveExpenseInRedux = (expense) => ({
 });
 
 export const deleteExpense = (expenses, idExpense) => {
-  const filteredExpenses = expenses.filter((expenseObject) => expenseObject.id !== idExpense);
+  const filteredExpenses = expenses.filter(
+    (expenseObject) => expenseObject.id !== idExpense
+  );
   return {
     type: DELETE_EXPENSE,
     filteredExpenses,
-  }
+  };
 };
 
 export const editExpense = (expensesRedux, componentState) => {
@@ -63,11 +62,10 @@ export const editExpense = (expensesRedux, componentState) => {
   return {
     type: EDIT_EXPENSE,
     newExpensesArray,
-  }
-
-}
+  };
+};
 
 export const saveIdOfExpenseToBeEdited = (idExpense) => ({
   type: EDIT_EXPENSE_ID,
   idExpense,
-})
+});

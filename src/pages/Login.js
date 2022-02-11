@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import { saveUserEmailInReduxStore } from '../actions';
 
 class Login extends React.Component {
-  constructor () {
+  constructor() {
     super();
 
     this.state = {
       userEmail: '',
       userPassword: '',
       disabledButton: true,
-    }
+    };
   }
 
   handlerInput = ({ target }) => {

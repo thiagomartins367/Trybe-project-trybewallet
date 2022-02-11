@@ -4,8 +4,9 @@ import { editExpense, saveExpenseInRedux } from '../actions';
 import LabelAndInput from './LabelAndInput';
 import LabelAndSelect from './LabelAndSelect';
 
+const Alimentacao = 'Alimentação';
 class ExpenseRecord extends Component {
-  constructor () {
+  constructor() {
     super();
 
     this.state = {
@@ -14,13 +15,13 @@ class ExpenseRecord extends Component {
       description: '',
       currency: '',
       method: 'Dinheiro',
-      tag: 'Alimentação',
-      exchangeRates: {}
+      tag: Alimentacao,
+      exchangeRates: {},
     }
   }
 
   componentDidMount() {
-    const currencyOptionsString = localStorage.getItem('COINS') + ',';
+    const currencyOptionsString = `${localStorage.getItem('COINS')},`;
     const currencyOptions = [];
     let string = '';
     for (let index = 0; index <= string.length; index += 1) {
@@ -30,7 +31,6 @@ class ExpenseRecord extends Component {
       } else {
         string += currencyOptionsString[index];
       }
-      
     }
     // console.log('localStorage: ', currencyOptions);
     // console.log('currencyOptions TEST:', currencyOptions);
@@ -84,13 +84,12 @@ class ExpenseRecord extends Component {
           description: '',
           currency: currencyOptions[0],
           method: 'Dinheiro',
-          tag: 'Alimentação',
+          tag: Alimentacao,
           exchangeRates: {}
         });
       });
     } catch (error) {
       console.log('---> *API REQUEST ERROR*\n \n', error);
-      window.alert('API REQUEST ERROR, Look at browser console');
     }
   }
 
@@ -120,7 +119,7 @@ class ExpenseRecord extends Component {
       description: '',
       currency: currencyOptions[0],
       method: 'Dinheiro',
-      tag: 'Alimentação',
+      tag: Alimentacao,
       exchangeRates: {}
     });
   }
@@ -169,9 +168,9 @@ class ExpenseRecord extends Component {
             nameSelect="method"
             selectContent={ method }
             optionsContent={[
-              "Dinheiro",
-              "Cartão de crédito",
-              "Cartão de débito",
+              'Dinheiro',
+              'Cartão de crédito',
+              'Cartão de débito',
             ]}
           />
           <LabelAndSelect
@@ -182,11 +181,11 @@ class ExpenseRecord extends Component {
             nameSelect="tag"
             selectContent={ tag }
             optionsContent={[
-              "Alimentação",
-              "Lazer",
-              "Trabalho",
-              "Transporte",
-              "Saúde",
+              Alimentacao,
+              'Lazer',
+              'Trabalho',
+              'Transporte',
+              'Saúde',
             ]}
           />
         </form>
@@ -218,10 +217,10 @@ const mapStateToProps = (reduxStore) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveExpenseInRedux: (componentState) =>
-    dispatch(saveExpenseInRedux(componentState)),
-  editExpenseRedux: (expensesRedux, componentState) =>
-    dispatch(editExpense(expensesRedux, componentState)),
+  saveExpenseInRedux:
+    (componentState) => dispatch(saveExpenseInRedux(componentState)),
+  editExpenseRedux:
+    (expensesRedux, componentState) => dispatch(editExpense(expensesRedux, componentState)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseRecord);

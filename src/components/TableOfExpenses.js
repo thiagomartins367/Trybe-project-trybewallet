@@ -4,13 +4,13 @@ import { deleteExpense, saveIdOfExpenseToBeEdited } from '../actions';
 
 class TableOfExpenses extends Component {
   convertAndFormatExpenses = (objectElement) => {
-    const { deleteExpense, expensesRedux, saveIdOfExpenseToBeEdited } = this.props;
+    const { deleteExpenseRedux, expensesRedux, saveIdOfExpenseToBeEditedRedux } = this.props;
     const { description, tag, method, value, currency, exchangeRates, id } = objectElement;
     const conversion = value * Number(exchangeRates[currency].ask);
     const convertedValueInBRL = Math.round(conversion * 100) / 100;
     return (
       <tr
-        key={`${value} ${currency} - ${tag} - ${convertedValueInBRL} BRL`}
+        key={ `${value} ${currency} - ${tag} - ${convertedValueInBRL} BRL` }
         className="tr-expense"
       >
         <td className="td-expense">{description}</td>
@@ -18,7 +18,7 @@ class TableOfExpenses extends Component {
         <td className="td-expense">{method}</td>
         <td className="td-expense">{Number(value).toFixed(2)}</td>
         <td className="td-expense">
-          {exchangeRates[currency].name.replace("/Real Brasileiro", "")}
+          {exchangeRates[currency].name.replace('/Real Brasileiro', '')}
         </td>
         <td className="td-expense">
           {(Math.round(Number(exchangeRates[currency].ask) * 100) / 100).toFixed(2)}
@@ -29,15 +29,15 @@ class TableOfExpenses extends Component {
         <td className="td-expense">Real</td>
         <td className="td-expense">
           <button type="button" data-testid="edit-btn" onClick={ () => {
-            saveIdOfExpenseToBeEdited(id)
+            saveIdOfExpenseToBeEditedRedux(id);
             localStorage.setItem('execute_Function', 'renderSelectedExpenseInformation');
-          }}
+          } }
           >
             Editar
           </button>
           <button
             type="button"
-            onClick={ () => deleteExpense(expensesRedux, id) }
+            onClick={ () => deleteExpenseRedux(expensesRedux, id) }
             data-testid="delete-btn"
           >
             Deletar
@@ -53,23 +53,22 @@ class TableOfExpenses extends Component {
       <section className="section-expense-table">
         <table>
           <thead>
-            <tr >
-              <th className='th-expense-table'>Descrição</th>
-              <th className='th-expense-table' id="tag-expense-table">Tag</th>
-              <th className='th-expense-table'>Método de pagamento</th>
-              <th className='th-expense-table' id="value-expense-table">Valor</th>
-              <th className='th-expense-table'>Moeda</th>
-              <th className='th-expense-table'>Câmbio utilizado</th>
-              <th className='th-expense-table'>Valor convertido</th>
-              <th className='th-expense-table'>Moeda de conversão</th>
-              <th className='th-expense-table'>Editar/Excluir</th>
+            <tr>
+              <th className="th-expense-table">Descrição</th>
+              <th className="th-expense-table" id="tag-expense-table">Tag</th>
+              <th className="th-expense-table">Método de pagamento</th>
+              <th className="th-expense-table" id="value-expense-table">Valor</th>
+              <th className="th-expense-table">Moeda</th>
+              <th className="th-expense-table">Câmbio utilizado</th>
+              <th className="th-expense-table">Valor convertido</th>
+              <th className="th-expense-table">Moeda de conversão</th>
+              <th className="th-expense-table">Editar/Excluir</th>
             </tr>
           </thead>
           <tbody>
             {
-              expensesRedux.map((objectElement) => {
-                return this.convertAndFormatExpenses(objectElement);
-              })
+              expensesRedux.map((objectElement) =>
+                this.convertAndFormatExpenses(objectElement))
             }
           </tbody>
         </table>
@@ -83,10 +82,10 @@ const mapStateToProps = (reduxStore) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteExpense: (expenses, idExpense) =>
-    dispatch(deleteExpense(expenses, idExpense)),
-  saveIdOfExpenseToBeEdited: (idExpense) =>
-    dispatch(saveIdOfExpenseToBeEdited(idExpense)),
+  deleteExpenseRedux:
+    (expenses, idExpense) => dispatch(deleteExpense(expenses, idExpense)),
+  saveIdOfExpenseToBeEditedRedux:
+    (idExpense) => dispatch(saveIdOfExpenseToBeEdited(idExpense)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableOfExpenses);

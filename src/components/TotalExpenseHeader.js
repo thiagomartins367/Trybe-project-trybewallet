@@ -18,10 +18,9 @@ class Header extends Component {
   }
 
   render() {
-    const { userEmail }= this.props;
+    const { userEmail } = this.props;
     const totalInBRL = this.sumExpensesToTheTotal();
     const totalFormatted = Math.round(totalInBRL * 100) / 100;
-    
     return (
       <header>
         Email:

@@ -11,7 +11,7 @@ class Wallet extends React.Component {
     window.onload = fetchAPI();
     return (
       <main>
-        <Header userEmail={ userEmail }/>
+        <Header userEmail={ userEmail } />
         <br />
         <br />
         <ExpenseRecord />
