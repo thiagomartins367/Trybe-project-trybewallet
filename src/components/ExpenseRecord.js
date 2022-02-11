@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { saveExpenseInRedux } from '../actions';
+import { editExpense, saveExpenseInRedux } from '../actions';
 import LabelAndInput from './LabelAndInput';
 import LabelAndSelect from './LabelAndSelect';
 
@@ -16,6 +16,38 @@ class ExpenseRecord extends Component {
       method: 'Dinheiro',
       tag: 'Alimentação',
       exchangeRates: {}
+    }
+  }
+
+  componentDidMount() {
+    const currencyOptionsString = localStorage.getItem('COINS') + ',';
+    const currencyOptions = [];
+    let string = '';
+    for (let index = 0; index <= string.length; index += 1) {
+      if (currencyOptionsString[index] === ',') {
+        currencyOptions.push(string);
+        string = '';
+      } else {
+        string += currencyOptionsString[index];
+      }
+      
+    }
+    // console.log('localStorage: ', currencyOptions);
+    // console.log('currencyOptions TEST:', currencyOptions);
+    const event = {
+      target: {
+        name: 'currency',
+        value: currencyOptions[0],
+      }
+    }
+    this.handlerInput(event);
+  }
+
+  componentDidUpdate() {
+    const executeFunction = localStorage.getItem('execute_Function');
+    if (executeFunction === 'renderSelectedExpenseInformation') {
+      this.renderSelectedExpenseInformation();
+      localStorage.setItem('execute_Function', '');
     }
   }
 
@@ -58,21 +90,46 @@ class ExpenseRecord extends Component {
       });
     } catch (error) {
       console.log('---> *API REQUEST ERROR*\n \n', error);
-      // window.alert('API REQUEST ERROR, Look at browser console');
+      window.alert('API REQUEST ERROR, Look at browser console');
     }
   }
 
-  render() {
-    const { currencyOptions } = this.props;
-    const { value, description } = this.state;
-    // console.log('currencyOptions1: ', currencyOptions);
-    const event = {
-      target: {
-        name: 'currency',
-        value: currencyOptions[0],
-      }
+  renderSelectedExpenseInformation = () => {
+    const { expensesRedux, editExpenseId } = this.props;
+    // console.log('editExpenseId: ', editExpenseId);
+    if (editExpenseId >= 0) {
+      // console.log('chamou renderSelectedExpenseInformation');
+      expensesRedux.map((objectExpense) => {
+        if (objectExpense.id === editExpenseId) {
+          const keysExpense = Object.keys(objectExpense);
+          // console.log('keys: ', keys);
+          keysExpense.map((key) => {
+            this.setState({ [key]: objectExpense[key] });
+          });
+        }
+      });
+      
     }
-    window.onload = () => this.handlerInput(event);
+  }
+
+  resetStateOfExpenseRecord = () => {
+    const { currencyOptions } = this.props;
+    this.setState({
+      id: '',
+      value: '',
+      description: '',
+      currency: currencyOptions[0],
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: {}
+    });
+  }
+
+  render() {
+    const { currencyOptions, expensesRedux, editExpenseId, editExpenseRedux } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    // console.log('render: ', currencyOptions);
+    // console.log('currencyOptions1: ', currencyOptions);
     return (
       <section>
         <form>
@@ -101,6 +158,7 @@ class ExpenseRecord extends Component {
             optionsContent={ currencyOptions }
             onChangeEvent={ this.handlerInput }
             nameSelect="currency"
+            selectContent={ currency }
             optionsDataTestId={ true }
           />
           <LabelAndSelect
@@ -109,7 +167,12 @@ class ExpenseRecord extends Component {
             selectDataTestid="method-input"
             onChangeEvent={ this.handlerInput }
             nameSelect="method"
-            optionsContent={['Dinheiro', 'Cartão de crédito', 'Cartão de débito']}
+            selectContent={ method }
+            optionsContent={[
+              "Dinheiro",
+              "Cartão de crédito",
+              "Cartão de débito",
+            ]}
           />
           <LabelAndSelect
             labelContent="Categoria: "
@@ -117,11 +180,32 @@ class ExpenseRecord extends Component {
             selectDataTestid="tag-input"
             onChangeEvent={ this.handlerInput }
             nameSelect="tag"
-            optionsContent={['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde']}
+            selectContent={ tag }
+            optionsContent={[
+              "Alimentação",
+              "Lazer",
+              "Trabalho",
+              "Transporte",
+              "Saúde",
+            ]}
           />
         </form>
         <br />
-        <button type="button" onClick={ this.saveUsedCurrencyQuote }>Adicionar Despesa</button>
+        {editExpenseId >= 0 ? (
+          <button
+            type="button"
+            onClick={ () => {
+              editExpenseRedux(expensesRedux, this.state);
+              this.resetStateOfExpenseRecord();
+            } }
+          >
+            Editar despesa
+          </button>
+        ) : (
+          <button type="button" onClick={ this.saveUsedCurrencyQuote }>
+            Adicionar despesa
+          </button>
+        )}
       </section>
     );
   }
@@ -130,10 +214,14 @@ class ExpenseRecord extends Component {
 const mapStateToProps = (reduxStore) => ({
   currencyOptions: reduxStore.wallet.currencies,
   expensesRedux: reduxStore.wallet.expenses,
+  editExpenseId: reduxStore.wallet.editExpenseId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveExpenseInRedux: (componentState) => dispatch(saveExpenseInRedux(componentState)),
+  saveExpenseInRedux: (componentState) =>
+    dispatch(saveExpenseInRedux(componentState)),
+  editExpenseRedux: (expensesRedux, componentState) =>
+    dispatch(editExpense(expensesRedux, componentState)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseRecord);

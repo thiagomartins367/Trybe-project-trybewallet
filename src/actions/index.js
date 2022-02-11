@@ -3,6 +3,8 @@ import { USER_EMAIL } from '../reducers/user';
 export const COINS = 'COINS';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const EDIT_EXPENSE_ID = 'EDIT_EXPENSE_ID';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 
 export const saveUserEmailInReduxStore = (email) => ({
   type: USER_EMAIL,
@@ -19,6 +21,7 @@ const saveCurrencyInStoreRedux = (data) => {
     }
   });
   // console.log('saveCurrencyInStoreRedux() --> DATA: ', dataFormatted);
+  localStorage.setItem('COINS', dataFormatted);
   return {
     type: COINS,
     data: dataFormatted,
@@ -28,7 +31,6 @@ const saveCurrencyInStoreRedux = (data) => {
 export const fetchAwesomeAPI = () => {
   // console.log('chamou fetchAwesomeAPI');
   return (dispatch) => {
-    // console.log('camou return-dispatch')
     return fetch('https://economia.awesomeapi.com.br/json/all')
       .then((resonse) => resonse.json())
       .then((data) => dispatch(saveCurrencyInStoreRedux(data)))
@@ -48,3 +50,24 @@ export const deleteExpense = (expenses, idExpense) => {
     filteredExpenses,
   }
 };
+
+export const editExpense = (expensesRedux, componentState) => {
+  const newExpensesArray = [];
+  expensesRedux.forEach((objectExpense) => {
+    if (objectExpense.id === componentState.id) {
+      newExpensesArray.push(componentState);
+    } else {
+      newExpensesArray.push(objectExpense);
+    }
+  });
+  return {
+    type: EDIT_EXPENSE,
+    newExpensesArray,
+  }
+
+}
+
+export const saveIdOfExpenseToBeEdited = (idExpense) => ({
+  type: EDIT_EXPENSE_ID,
+  idExpense,
+})

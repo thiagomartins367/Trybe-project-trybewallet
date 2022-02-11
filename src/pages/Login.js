@@ -65,7 +65,7 @@ class Login extends React.Component {
           <button
             type="button"
             disabled={ disabledButton }
-            onClick={() => saveUserEmail(this.state)}
+            onClick={ () => saveUserEmail(this.state) }
           >
             Entrar
           </button>

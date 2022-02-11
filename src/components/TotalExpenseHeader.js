@@ -10,11 +10,6 @@ class Header extends Component {
     let totalExpensesInBRL = 0;
     expensesRedux.map((objectElement) => {
       const { value, currency, exchangeRates } = objectElement;
-      // console.log('------------------------------------------------');
-      // console.log('Valor: ', value);
-      // console.log('Moeda: ', currency);
-      // console.log(`Valor em BRL: `, Number(exchangeRates[currency].ask) * value);
-      // console.log('exchangeRates: ', exchangeRates);
       const quoteInBRL = Number(exchangeRates[currency].ask);
       totalExpensesInBRL += value * quoteInBRL;
       return '';

@@ -12,7 +12,6 @@ class LabelAndSelect extends Component {
       onChangeEvent,
       nameSelect,
     } = this.props;
-    // console.log('optionsContent-->: ', optionsContent);
     return (
       <div>
         <label htmlFor={ selectId }>{ labelContent }</label>
@@ -20,12 +19,13 @@ class LabelAndSelect extends Component {
           id={ selectId }
           onChange={ onChangeEvent }
           name={ nameSelect }
+          value={ selectContent }
           data-testid={ selectDataTestid }
         >
           {optionsContent.map((element) => (
             <option
               key={ element }
-              data-testid={ optionsDataTestId ? element : "" }
+              data-testid={ optionsDataTestId ? element : '' }
             >
               { element }
             </option>

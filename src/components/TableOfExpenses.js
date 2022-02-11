@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { deleteExpense } from '../actions';
+import { deleteExpense, saveIdOfExpenseToBeEdited } from '../actions';
 
 class TableOfExpenses extends Component {
   convertAndFormatExpenses = (objectElement) => {
-    const { deleteExpense, expensesRedux } = this.props;
+    const { deleteExpense, expensesRedux, saveIdOfExpenseToBeEdited } = this.props;
     const { description, tag, method, value, currency, exchangeRates, id } = objectElement;
     const conversion = value * Number(exchangeRates[currency].ask);
     const convertedValueInBRL = Math.round(conversion * 100) / 100;
-    // console.log('BRL: ', conversion.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }));
-    // expensesRedux.map((objectElement) => {
-      
-    //   // console.log('------------------------------------------------');
-    //   // console.log('Valor: ', value);
-    //   // console.log('Moeda: ', currency);
-    //   // console.log(`Valor em BRL: `, Number(exchangeRates[currency].ask) * value);
-    //   totalExpensesInBRL += value * quoteInBRL;
-    //   return '';
-    // });
-    // return totalExpensesInBRL;
     return (
       <tr
         key={`${value} ${currency} - ${tag} - ${convertedValueInBRL} BRL`}
@@ -32,18 +21,23 @@ class TableOfExpenses extends Component {
           {exchangeRates[currency].name.replace("/Real Brasileiro", "")}
         </td>
         <td className="td-expense">
-          {/* <span>R$ </span> */}
-          {Math.round(Number(exchangeRates[currency].ask) * 100) / 100}
+          {(Math.round(Number(exchangeRates[currency].ask) * 100) / 100).toFixed(2)}
         </td>
         <td className="td-expense">
-          {/* <span>R$ </span> */}
           {convertedValueInBRL}
         </td>
         <td className="td-expense">Real</td>
         <td className="td-expense">
+          <button type="button" data-testid="edit-btn" onClick={ () => {
+            saveIdOfExpenseToBeEdited(id)
+            localStorage.setItem('execute_Function', 'renderSelectedExpenseInformation');
+          }}
+          >
+            Editar
+          </button>
           <button
             type="button"
-            onClick={() => deleteExpense(expensesRedux, id)}
+            onClick={ () => deleteExpense(expensesRedux, id) }
             data-testid="delete-btn"
           >
             Deletar
@@ -89,7 +83,10 @@ const mapStateToProps = (reduxStore) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteExpense: (expenses, idExpense) => dispatch(deleteExpense(expenses, idExpense))
+  deleteExpense: (expenses, idExpense) =>
+    dispatch(deleteExpense(expenses, idExpense)),
+  saveIdOfExpenseToBeEdited: (idExpense) =>
+    dispatch(saveIdOfExpenseToBeEdited(idExpense)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableOfExpenses);
