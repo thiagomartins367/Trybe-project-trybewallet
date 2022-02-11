@@ -12,7 +12,22 @@ export const saveUserEmailInReduxStore = (email) => ({
 });
 
 const saveCurrencyInStoreRedux = (data) => {
-  const coinList = ['USD', 'CAD', 'EUR', 'GBP', 'ARS', 'BTC', 'LTC', 'JPY', 'CHF', 'AUD', 'CNY', 'ILS', 'ETH', 'XRP'];
+  const coinList = [
+    'USD',
+    'CAD',
+    'EUR',
+    'GBP',
+    'ARS',
+    'BTC',
+    'LTC',
+    'JPY',
+    'CHF',
+    'AUD',
+    'CNY',
+    'ILS',
+    'ETH',
+    'XRP',
+  ];
   const dataKeys = Object.keys(data);
   const dataFormatted = [];
   dataKeys.forEach((element) => {
@@ -28,12 +43,11 @@ const saveCurrencyInStoreRedux = (data) => {
   };
 };
 
-export const fetchAwesomeAPI = () =>
-  (dispatch) =>
-    fetch('https://economia.awesomeapi.com.br/json/all')
-      .then((resonse) => resonse.json())
-      .then((data) => dispatch(saveCurrencyInStoreRedux(data)))
-      .catch((error) => error);
+export const fetchAwesomeAPI = () => (dispatch) =>
+  fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((resonse) => resonse.json())
+    .then((data) => dispatch(saveCurrencyInStoreRedux(data)))
+    .catch((error) => error);
 
 export const saveExpenseInRedux = (expense) => ({
   type: ADD_EXPENSE,
@@ -42,7 +56,7 @@ export const saveExpenseInRedux = (expense) => ({
 
 export const deleteExpense = (expenses, idExpense) => {
   const filteredExpenses = expenses.filter(
-    (expenseObject) => expenseObject.id !== idExpense
+    (expenseObject) => expenseObject.id !== idExpense,
   );
   return {
     type: DELETE_EXPENSE,

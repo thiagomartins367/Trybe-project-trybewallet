@@ -17,7 +17,7 @@ class ExpenseRecord extends Component {
       method: 'Dinheiro',
       tag: Alimentacao,
       exchangeRates: {},
-    }
+    };
   }
 
   componentDidMount() {
@@ -38,8 +38,8 @@ class ExpenseRecord extends Component {
       target: {
         name: 'currency',
         value: currencyOptions[0],
-      }
-    }
+      },
+    };
     this.handlerInput(event);
   }
 
@@ -58,7 +58,7 @@ class ExpenseRecord extends Component {
   }
 
   saveUsedCurrencyQuote = async () => {
-    const { saveExpenseInRedux, expensesRedux, currencyOptions } = this.props;
+    const { actionSaveExpenseInRedux, expensesRedux, currencyOptions } = this.props;
     const expenseIds = [];
     // console.log('expensesRedux: ', expensesRedux);
     if (expensesRedux.length > 0) {
@@ -77,7 +77,7 @@ class ExpenseRecord extends Component {
       const quoteData = await response.json();
       this.setState({ exchangeRates: quoteData }, () => {
         // console.log('quoteData SAVED: ', quoteData);
-        saveExpenseInRedux(this.state);
+        actionSaveExpenseInRedux(this.state);
         this.setState({
           id: '',
           value: '',
@@ -85,7 +85,7 @@ class ExpenseRecord extends Component {
           currency: currencyOptions[0],
           method: 'Dinheiro',
           tag: Alimentacao,
-          exchangeRates: {}
+          exchangeRates: {},
         });
       });
     } catch (error) {
@@ -104,10 +104,11 @@ class ExpenseRecord extends Component {
           // console.log('keys: ', keys);
           keysExpense.map((key) => {
             this.setState({ [key]: objectExpense[key] });
+            return '';
           });
         }
+        return '';
       });
-      
     }
   }
 
@@ -120,12 +121,17 @@ class ExpenseRecord extends Component {
       currency: currencyOptions[0],
       method: 'Dinheiro',
       tag: Alimentacao,
-      exchangeRates: {}
+      exchangeRates: {},
     });
   }
 
   render() {
-    const { currencyOptions, expensesRedux, editExpenseId, editExpenseRedux } = this.props;
+    const {
+      currencyOptions,
+      expensesRedux,
+      editExpenseId,
+      editExpenseRedux
+    } = this.props;
     const { value, description, currency, method, tag } = this.state;
     // console.log('render: ', currencyOptions);
     // console.log('currencyOptions1: ', currencyOptions);
@@ -158,7 +164,7 @@ class ExpenseRecord extends Component {
             onChangeEvent={ this.handlerInput }
             nameSelect="currency"
             selectContent={ currency }
-            optionsDataTestId={ true }
+            optionsDataTestId
           />
           <LabelAndSelect
             labelContent="Método de Pagamento: "
@@ -167,11 +173,11 @@ class ExpenseRecord extends Component {
             onChangeEvent={ this.handlerInput }
             nameSelect="method"
             selectContent={ method }
-            optionsContent={[
+            optionsContent={ [
               'Dinheiro',
               'Cartão de crédito',
               'Cartão de débito',
-            ]}
+            ] }
           />
           <LabelAndSelect
             labelContent="Categoria: "
@@ -180,13 +186,13 @@ class ExpenseRecord extends Component {
             onChangeEvent={ this.handlerInput }
             nameSelect="tag"
             selectContent={ tag }
-            optionsContent={[
+            optionsContent={ [
               Alimentacao,
               'Lazer',
               'Trabalho',
               'Transporte',
               'Saúde',
-            ]}
+            ] }
           />
         </form>
         <br />
@@ -217,10 +223,12 @@ const mapStateToProps = (reduxStore) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveExpenseInRedux:
+  actionSaveExpenseInRedux:
     (componentState) => dispatch(saveExpenseInRedux(componentState)),
   editExpenseRedux:
-    (expensesRedux, componentState) => dispatch(editExpense(expensesRedux, componentState)),
+    (expensesRedux, componentState) => dispatch(
+      editExpense(expensesRedux, componentState),
+    ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseRecord);

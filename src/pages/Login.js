@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { saveUserEmailInReduxStore } from '../actions';
 
+const MINIMUM_OF_CHARACTERS = 6;
 class Login extends React.Component {
   constructor() {
     super();
@@ -25,7 +26,10 @@ class Login extends React.Component {
     const { userEmail, userPassword } = this.state;
     const defaultEmailFormat = /\S+@\S+\.\S+/; // <----- Estas 2 linhas de  código foram retiradas do Artigo:
     const validateEmailFormat = defaultEmailFormat.test(userEmail); // <--- https://www.horadecodar.com.br/2020/09/07/expressao-regular-para-validar-e-mail-javascript-regex
-    if (validateEmailFormat === true && userPassword.length >= 6) {
+    if (
+      validateEmailFormat === true &&
+      userPassword.length >= MINIMUM_OF_CHARACTERS
+    ) {
       this.setState({ disabledButton: false });
     } else {
       this.setState({ disabledButton: true });

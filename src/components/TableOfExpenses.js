@@ -4,8 +4,20 @@ import { deleteExpense, saveIdOfExpenseToBeEdited } from '../actions';
 
 class TableOfExpenses extends Component {
   convertAndFormatExpenses = (objectElement) => {
-    const { deleteExpenseRedux, expensesRedux, saveIdOfExpenseToBeEditedRedux } = this.props;
-    const { description, tag, method, value, currency, exchangeRates, id } = objectElement;
+    const {
+      deleteExpenseRedux,
+      expensesRedux,
+      saveIdOfExpenseToBeEditedRedux,
+    } = this.props;
+    const {
+      description,
+      tag,
+      method,
+      value,
+      currency,
+      exchangeRates,
+      id,
+    } = objectElement;
     const conversion = value * Number(exchangeRates[currency].ask);
     const convertedValueInBRL = Math.round(conversion * 100) / 100;
     return (
@@ -28,10 +40,13 @@ class TableOfExpenses extends Component {
         </td>
         <td className="td-expense">Real</td>
         <td className="td-expense">
-          <button type="button" data-testid="edit-btn" onClick={ () => {
-            saveIdOfExpenseToBeEditedRedux(id);
-            localStorage.setItem('execute_Function', 'renderSelectedExpenseInformation');
-          } }
+          <button
+            type="button"
+            data-testid="edit-btn"
+            onClick={ () => {
+              saveIdOfExpenseToBeEditedRedux(id);
+              localStorage.setItem('execute_Function', 'renderSelectedExpenseInformation');
+            } }
           >
             Editar
           </button>
@@ -67,8 +82,8 @@ class TableOfExpenses extends Component {
           </thead>
           <tbody>
             {
-              expensesRedux.map((objectElement) =>
-                this.convertAndFormatExpenses(objectElement))
+              expensesRedux.map(
+                (objectElement) => this.convertAndFormatExpenses(objectElement))
             }
           </tbody>
         </table>
