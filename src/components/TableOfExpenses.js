@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes, { shape } from 'prop-types';
 import { connect } from 'react-redux';
 import { deleteExpense, saveIdOfExpenseToBeEdited } from '../actions';
+import { Tab } from 'bootstrap';
 
 class TableOfExpenses extends Component {
   convertAndFormatExpenses = (objectElement) => {
@@ -45,7 +47,10 @@ class TableOfExpenses extends Component {
             data-testid="edit-btn"
             onClick={ () => {
               saveIdOfExpenseToBeEditedRedux(id);
-              localStorage.setItem('execute_Function', 'renderSelectedExpenseInformation');
+              localStorage.setItem(
+                'execute_Function',
+                'renderSelectedExpenseInformation'
+              );
             } }
           >
             Editar
@@ -83,7 +88,8 @@ class TableOfExpenses extends Component {
           <tbody>
             {
               expensesRedux.map(
-                (objectElement) => this.convertAndFormatExpenses(objectElement))
+                (objectElement) => this.convertAndFormatExpenses(objectElement),
+              )
             }
           </tbody>
         </table>
@@ -102,5 +108,11 @@ const mapDispatchToProps = (dispatch) => ({
   saveIdOfExpenseToBeEditedRedux:
     (idExpense) => dispatch(saveIdOfExpenseToBeEdited(idExpense)),
 });
+
+TableOfExpenses.propTypes = {
+  deleteExpenseRedux: PropTypes.func.isRequired,
+  expensesRedux: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  saveIdOfExpenseToBeEditedRedux: PropTypes.func.isRequired,
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableOfExpenses);

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes, { objectOf } from 'prop-types';
 import { connect } from 'react-redux';
 
-class Header extends Component {
+class TotalExpenseHeader extends Component {
   sumExpensesToTheTotal = () => {
     const {
       expensesRedux,
@@ -39,4 +40,13 @@ const mapStateToProps = (reduxStore) => ({
   expensesRedux: reduxStore.wallet.expenses,
 });
 
-export default connect(mapStateToProps, null)(Header);
+TotalExpenseHeader.propTypes = {
+  expensesRedux: PropTypes.arrayOf(objectOf(PropTypes.string)),
+  userEmail: PropTypes.string,
+}
+
+TotalExpenseHeader.defaultPropTypes = {
+  userEmail: '',
+}
+
+export default connect(mapStateToProps, null)(TotalExpenseHeader);

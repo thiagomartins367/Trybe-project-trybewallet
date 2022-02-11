@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchAwesomeAPI } from '../actions';
 import ExpenseRecord from '../components/ExpenseRecord';
 import TableOfExpenses from '../components/TableOfExpenses';
-import Header from '../components/TotalExpenseHeader';
+import TotalExpenseHeader from '../components/TotalExpenseHeader';
 
 class Wallet extends React.Component {
   render() {
@@ -11,7 +12,7 @@ class Wallet extends React.Component {
     window.onload = fetchAPI();
     return (
       <main>
-        <Header userEmail={ userEmail } />
+        <TotalExpenseHeader userEmail={ userEmail } />
         <br />
         <br />
         <ExpenseRecord />
@@ -29,5 +30,14 @@ const mapStateToProps = (reduxState) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchAPI: () => dispatch(fetchAwesomeAPI()),
 });
+
+Wallet.propTypes = {
+  userEmail: PropTypes.string,
+  fetchAPI: PropTypes.func.isRequired,
+}
+
+Wallet.defaultPropTypes = {
+  userEmail: '',
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

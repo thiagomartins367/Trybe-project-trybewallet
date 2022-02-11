@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class LabelAndInput extends Component {
   render() {
@@ -25,6 +26,21 @@ class LabelAndInput extends Component {
       </div>
     );
   }
+}
+
+LabelAndInput.propTypes = {
+  labelContent: PropTypes.string.isRequired,
+  inputContent: PropTypes.string.isRequired,
+  typeInput: PropTypes.string.isRequired,
+  inputId: PropTypes.string.isRequired,
+  inputDataTestid: PropTypes.string,
+  onChangeEvent: PropTypes.func,
+  nameInput: PropTypes.string.isRequired,
+}
+
+LabelAndInput.defaultPropTypes = {
+  inputDataTestid: '',
+  onChangeEvent: () => '',
 }
 
 export default LabelAndInput;

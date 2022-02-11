@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { editExpense, saveExpenseInRedux } from '../actions';
+import PropTypes from 'prop-types';
 import LabelAndInput from './LabelAndInput';
 import LabelAndSelect from './LabelAndSelect';
 
@@ -10,7 +11,7 @@ class ExpenseRecord extends Component {
     super();
 
     this.state = {
-      id: '',
+      id: -1,
       value: '',
       description: '',
       currency: '',
@@ -130,7 +131,7 @@ class ExpenseRecord extends Component {
       currencyOptions,
       expensesRedux,
       editExpenseId,
-      editExpenseRedux
+      editExpenseRedux,
     } = this.props;
     const { value, description, currency, method, tag } = this.state;
     // console.log('render: ', currencyOptions);
@@ -230,5 +231,20 @@ const mapDispatchToProps = (dispatch) => ({
       editExpense(expensesRedux, componentState),
     ),
 });
+
+ExpenseRecord.propTypes = {
+  currencyOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
+  expensesRedux: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    value: PropTypes.string,
+    description: PropTypes.string,
+    currency: PropTypes.string,
+    method: PropTypes.string,
+    tag: PropTypes.string,
+    exchangeRates: PropTypes.objectOf(PropTypes.string),
+  })).isRequired,
+  editExpenseId: PropTypes.number.isRequired,
+  editExpenseRedux: PropTypes.func.isRequired,
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseRecord);

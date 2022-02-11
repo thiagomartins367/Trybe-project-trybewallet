@@ -43,11 +43,13 @@ const saveCurrencyInStoreRedux = (data) => {
   };
 };
 
-export const fetchAwesomeAPI = () => (dispatch) =>
-  fetch('https://economia.awesomeapi.com.br/json/all')
+export const fetchAwesomeAPI = () => (dispatch) => {
+  const url = 'https://economia.awesomeapi.com.br/json/all';
+  return fetch(url)
     .then((resonse) => resonse.json())
     .then((data) => dispatch(saveCurrencyInStoreRedux(data)))
     .catch((error) => error);
+}
 
 export const saveExpenseInRedux = (expense) => ({
   type: ADD_EXPENSE,

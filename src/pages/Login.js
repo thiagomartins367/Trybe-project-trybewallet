@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { saveUserEmailInReduxStore } from '../actions';
@@ -27,8 +28,8 @@ class Login extends React.Component {
     const defaultEmailFormat = /\S+@\S+\.\S+/; // <----- Estas 2 linhas de  código foram retiradas do Artigo:
     const validateEmailFormat = defaultEmailFormat.test(userEmail); // <--- https://www.horadecodar.com.br/2020/09/07/expressao-regular-para-validar-e-mail-javascript-regex
     if (
-      validateEmailFormat === true &&
-      userPassword.length >= MINIMUM_OF_CHARACTERS
+      validateEmailFormat === true
+      && userPassword.length >= MINIMUM_OF_CHARACTERS
     ) {
       this.setState({ disabledButton: false });
     } else {
@@ -82,5 +83,9 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   saveUserEmail: ({ userEmail }) => dispatch(saveUserEmailInReduxStore(userEmail)),
 });
+
+Login.propTypes = {
+  saveUserEmail: PropTypes.func.isRequired,
+}
 
 export default connect(null, mapDispatchToProps)(Login);
