@@ -1,9 +1,9 @@
 .section-expense-table {
-  text-align: center;
-  margin: 20px;
+  align-items: center;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  margin: 20px;
+  text-align: center;
 }
 
 .th-expense-table {
@@ -12,18 +12,19 @@
 }
 
 #tag-expense-table {
-  padding: 0px 40px;
+  border: 1px solid black;
+  padding: 0.0001px 40px;
 }
 
 #value-expense-table {
-  padding: 0px 40px;
+  border: 1px solid black;
+  padding: 0.0001px 40px;
 }
 
 .tr-expense {
   background: gray;
-  
 }
 
 .td-expense {
- padding-top: 20px;
+  padding-top: 20px;
 }
