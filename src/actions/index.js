@@ -12,30 +12,8 @@ export const saveUserEmailInReduxStore = (email) => ({
 });
 
 const saveCurrencyInStoreRedux = (data) => {
-  const coinList = [
-    'USD',
-    'CAD',
-    'EUR',
-    'GBP',
-    'ARS',
-    'BTC',
-    'LTC',
-    'JPY',
-    'CHF',
-    'AUD',
-    'CNY',
-    'ILS',
-    'ETH',
-    'XRP',
-  ];
   const dataKeys = Object.keys(data);
-  const dataFormatted = [];
-  dataKeys.forEach((element) => {
-    if (coinList.includes(element)) {
-      dataFormatted.push(element);
-    }
-  });
-  // console.log('saveCurrencyInStoreRedux() --> DATA: ', dataFormatted);
+  const dataFormatted = dataKeys.filter((element) => element !== 'USDT');
   localStorage.setItem('COINS', dataFormatted);
   return {
     type: COINS,
