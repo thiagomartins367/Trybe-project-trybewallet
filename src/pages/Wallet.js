@@ -34,10 +34,10 @@ const mapDispatchToProps = (dispatch) => ({
 Wallet.propTypes = {
   userEmail: PropTypes.string,
   fetchAPI: PropTypes.func.isRequired,
-}
+};
 
-Wallet.defaultPropTypes = {
+Wallet.defaultProps = {
   userEmail: '',
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

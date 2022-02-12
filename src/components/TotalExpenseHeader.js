@@ -41,12 +41,12 @@ const mapStateToProps = (reduxStore) => ({
 });
 
 TotalExpenseHeader.propTypes = {
-  expensesRedux: PropTypes.arrayOf(objectOf(PropTypes.string)),
+  expensesRedux: PropTypes.arrayOf(objectOf(PropTypes.string)).isRequired,
   userEmail: PropTypes.string,
-}
+};
 
-TotalExpenseHeader.defaultPropTypes = {
+TotalExpenseHeader.defaultProps = {
   userEmail: '',
-}
+};
 
 export default connect(mapStateToProps, null)(TotalExpenseHeader);

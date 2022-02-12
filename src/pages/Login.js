@@ -86,6 +86,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   saveUserEmail: PropTypes.func.isRequired,
-}
+};
 
 export default connect(null, mapDispatchToProps)(Login);

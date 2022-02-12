@@ -46,12 +46,12 @@ LabelAndSelect.propTypes = {
   optionsDataTestId: PropTypes.string,
   onChangeEvent: PropTypes.func,
   nameSelect: PropTypes.string.isRequired,
-}
+};
 
-LabelAndSelect.defaultPropTypes = {
+LabelAndSelect.defaultProps = {
   selectDataTestid: '',
   optionsDataTestId: '',
   onChangeEvent: '',
-}
+};
 
 export default LabelAndSelect;

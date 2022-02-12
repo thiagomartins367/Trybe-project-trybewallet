@@ -36,11 +36,11 @@ LabelAndInput.propTypes = {
   inputDataTestid: PropTypes.string,
   onChangeEvent: PropTypes.func,
   nameInput: PropTypes.string.isRequired,
-}
+};
 
-LabelAndInput.defaultPropTypes = {
+LabelAndInput.defaultProps = {
   inputDataTestid: '',
   onChangeEvent: () => '',
-}
+};
 
 export default LabelAndInput;

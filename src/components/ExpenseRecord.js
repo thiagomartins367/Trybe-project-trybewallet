@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { editExpense, saveExpenseInRedux } from '../actions';
-import PropTypes from 'prop-types';
 import LabelAndInput from './LabelAndInput';
 import LabelAndSelect from './LabelAndSelect';
 
@@ -33,8 +33,6 @@ class ExpenseRecord extends Component {
         string += currencyOptionsString[index];
       }
     }
-    // console.log('localStorage: ', currencyOptions);
-    // console.log('currencyOptions TEST:', currencyOptions);
     const event = {
       target: {
         name: 'currency',
@@ -245,6 +243,7 @@ ExpenseRecord.propTypes = {
   })).isRequired,
   editExpenseId: PropTypes.number.isRequired,
   editExpenseRedux: PropTypes.func.isRequired,
-}
+  actionSaveExpenseInRedux: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseRecord);

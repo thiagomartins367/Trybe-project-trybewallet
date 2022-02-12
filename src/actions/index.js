@@ -49,7 +49,7 @@ export const fetchAwesomeAPI = () => (dispatch) => {
     .then((resonse) => resonse.json())
     .then((data) => dispatch(saveCurrencyInStoreRedux(data)))
     .catch((error) => error);
-}
+};
 
 export const saveExpenseInRedux = (expense) => ({
   type: ADD_EXPENSE,
