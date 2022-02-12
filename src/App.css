@@ -11,14 +11,14 @@
   padding: 15px;
 }
 
-#tag-expense-table {
+.tag-expense-table {
   border: 1px solid black;
-  padding: 0.0001px 40px;
+  padding: 0.001px 40px;
 }
 
-#value-expense-table {
+.value-expense-table {
   border: 1px solid black;
-  padding: 0.0001px 40px;
+  padding: 0.001px 40px;
 }
 
 .tr-expense {

@@ -74,9 +74,9 @@ class TableOfExpenses extends Component {
           <thead>
             <tr>
               <th className="th-expense-table">Descrição</th>
-              <th id="tag-expense-table">Tag</th>
+              <th className="tag-expense-table">Tag</th>
               <th className="th-expense-table">Método de pagamento</th>
-              <th id="value-expense-table">Valor</th>
+              <th className="value-expense-table">Valor</th>
               <th className="th-expense-table">Moeda</th>
               <th className="th-expense-table">Câmbio utilizado</th>
               <th className="th-expense-table">Valor convertido</th>
