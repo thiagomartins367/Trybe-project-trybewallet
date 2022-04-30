@@ -10,6 +10,7 @@ O projeto tem por objetivo a avaliação e prática dos conhecimentos adquiridos
 
 ## Sumário
 
+- [Descrição](#descrição)
 - [Habilidades](#habilidades-requeridas)
 - [O que foi desenvolvido](#o-que-foi-desenvolvido)
 - [Tecnologias usadas](#tecnologias-usadas)
