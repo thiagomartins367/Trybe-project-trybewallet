@@ -13,7 +13,7 @@ O projeto tem por objetivo a avaliação e prática dos conhecimentos adquiridos
 - [Habilidades](#habilidades-requeridas)
 - [O que foi desenvolvido](#o-que-foi-desenvolvido)
 - [Tecnologias usadas](#tecnologias-usadas)
-- [Antes de inicializar a aplicação](#antes-de-inicializar-a-aplicação)
+- [ANTES DE INICIALIZAR A APLICAÇÃO](#antes-de-inicializar-a-aplicação)
 - [Configurando o Redux DevTools](#configurando-o-redux-devtools)
 - [Documentação da API de Cotações de Moedas](#documentação-da-api-de-cotações-de-moedas)
 - [Linter](#linter)
@@ -51,11 +51,11 @@ Foi implementado uma carteira de controle de gastos com conversor de moedas, ao 
 
 ## Tecnologias usadas
 
-- `javascript`, `jsx`, `React`, `Redux` e `css`.
+- `javascript` , `jsx` , `React` , `Redux` e `css`.
 
 ---
 
-## ANTES DE INICIALIZAR A APLICAÇÃO:
+## ANTES DE INICIALIZAR A APLICAÇÃO
 
 1. Clone o repositório
   * `git clone git@github.com:THIAGOMARTINS367/Trybe-project-trybewallet.git`
