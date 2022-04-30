@@ -61,13 +61,14 @@ Foi implementado uma carteira de controle de gastos com conversor de moedas, ao 
   * `git clone git@github.com:THIAGOMARTINS367/Trybe-project-trybewallet.git`
 
   * Entre na pasta do repositório na sua máquina:
-    * `Trybe-project-trybewallet`
+    * `cd Trybe-project-trybewallet`
 
 2. Instale as dependências
    * `npm install`
 
 3.  Inicialize o projeto
-    * Utilize o comando `npm start` dentro da pasta `Trybe-project-trybewallet` para rodar o projeto em sua máquina.
+    * `npm start`
+    * ⚠️ Lembrando que já deve se estar dentro da pasta do projeto `Trybe-project-recipes-app` ⚠️
 
 ---
 
