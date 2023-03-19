@@ -14,7 +14,6 @@ services:
       - 3020:3020
     volumes:
       - ./src:/usr/src/dev_app-frontend/src # Mapeamento apenas para ambiente DEV
-      - ./package:/usr/src/dev_app-frontend/package # Mapeamento apenas para ambiente DEV
       - ./public:/usr/src/dev_app-frontend/public # Mapeamento apenas para ambiente DEV
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
