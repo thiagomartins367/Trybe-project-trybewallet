@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+    build_trybe_wallet:
+      container_name: build_trybe_wallet
+      image: build_trybe-wallet
+      build: 
+        context: .
+        target: build
+      working_dir: /usr/src/build_app-frontend
+      restart: always
+      env_file:
+        - ./.env.production.local
+      volumes:
+        - ./build:/usr/src/build_app-frontend/build
+        - "/etc/timezone:/etc/timezone:ro"
+        - "/etc/localtime:/etc/localtime:ro"
+    
+    prod_trybe_wallet:
+      container_name: prod_trybe_wallet
+      image: prod_trybe-wallet
+      build: 
+        context: .
+        target: production
+      working_dir: /usr/share/nginx/html
+      restart: always
+      env_file:
+        - ./.env.production.local
+      ports:
+        - 3021:80
+      volumes:
+        - ./build:/usr/share/nginx/html
+        - "/etc/timezone:/etc/timezone:ro"
+        - "/etc/localtime:/etc/localtime:ro"
+      networks:
+        - prod_trybe_wallet
+
+networks:
+  prod_trybe_wallet:
+    external: false
+    name: prod_trybe_wallet
