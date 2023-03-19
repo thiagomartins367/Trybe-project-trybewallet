@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  dev_trybe_wallet:
+    container_name: dev_trybe_wallet
+    image: dev_trybe-wallet
+    build: 
+      context: .
+      target: development
+    working_dir: /usr/src/dev_app-frontend
+    restart: always
+    env_file:
+      - ./.env.development.local
+    ports:
+      - 3020:3020
+    volumes:
+      - ./src:/usr/src/dev_app-frontend/src # Mapeamento apenas para ambiente DEV
+      - ./package:/usr/src/dev_app-frontend/package # Mapeamento apenas para ambiente DEV
+      - ./public:/usr/src/dev_app-frontend/public # Mapeamento apenas para ambiente DEV
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    networks:
+      - dev_trybe_wallet
+
+networks:
+  dev_trybe_wallet:
+    external: false
+    name: dev_trybe_wallet
