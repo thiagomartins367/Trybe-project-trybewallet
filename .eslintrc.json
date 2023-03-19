@@ -10,8 +10,5 @@
       "jsx": true
     },
     "sourceType": "module"
-  },
-  "plugins": [
-    "react"
-  ]
+  }
 }
