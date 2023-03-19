@@ -8,7 +8,7 @@ import * as serviceWorker from './serviceWorker';
 import reduxStore from './store/index';
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename={ process.env.PUBLIC_URL }>
     <Provider store={ reduxStore }>
       <App />
     </Provider>
