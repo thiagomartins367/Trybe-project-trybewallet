@@ -53,16 +53,13 @@ class ExpenseRecord extends Component {
   handlerInput = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value });
-    // console.log(value)
   }
 
   saveUsedCurrencyQuote = async () => {
     const { actionSaveExpenseInRedux, expensesRedux, currencyOptions } = this.props;
     const expenseIds = [];
-    // console.log('expensesRedux: ', expensesRedux);
     if (expensesRedux.length > 0) {
       expensesRedux.map((objectElement) => {
-        // console.log('typeof: ', typeof objectElement.id);
         expenseIds.push(objectElement.id);
         return '';
       });
@@ -75,7 +72,6 @@ class ExpenseRecord extends Component {
       const response = await fetch('https://economia.awesomeapi.com.br/json/all');
       const quoteData = await response.json();
       this.setState({ exchangeRates: quoteData }, () => {
-        // console.log('quoteData SAVED: ', quoteData);
         actionSaveExpenseInRedux(this.state);
         this.setState({
           id: '',
@@ -94,9 +90,7 @@ class ExpenseRecord extends Component {
 
   renderSelectedExpenseInformation = () => {
     const { expensesRedux, editExpenseId } = this.props;
-    // console.log('editExpenseId: ', editExpenseId);
     if (editExpenseId >= 0) {
-      // console.log('chamou renderSelectedExpenseInformation');
       expensesRedux.map((objectExpense) => {
         if (objectExpense.id === editExpenseId) {
           const keysExpense = Object.keys(objectExpense);
@@ -132,8 +126,6 @@ class ExpenseRecord extends Component {
       editExpenseRedux,
     } = this.props;
     const { value, description, currency, method, tag } = this.state;
-    // console.log('render: ', currencyOptions);
-    // console.log('currencyOptions1: ', currencyOptions);
     return (
       <section>
         <form>
