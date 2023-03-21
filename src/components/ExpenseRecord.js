@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { editExpense, saveExpenseInRedux } from '../actions';
+import { editExpense, saveExpenseInRedux, saveIdOfExpenseToBeEdited } from '../actions';
 import LabelAndInput from './LabelAndInput';
 import LabelAndSelect from './LabelAndSelect';
 
 const Alimentacao = 'Alimentação';
+const NEGATIVE_NUMBER_ONE = -1;
+
 class ExpenseRecord extends Component {
   constructor() {
     super();
 
     this.state = {
-      id: -1,
+      id: NEGATIVE_NUMBER_ONE,
       value: '',
       description: '',
       currency: '',
@@ -106,9 +108,9 @@ class ExpenseRecord extends Component {
   }
 
   resetStateOfExpenseRecord = () => {
-    const { currencyOptions } = this.props;
+    const { currencyOptions, saveIdOfExpenseToBeEditedRedux } = this.props;
     this.setState({
-      id: '',
+      id: NEGATIVE_NUMBER_ONE,
       value: '',
       description: '',
       currency: currencyOptions[0],
@@ -116,6 +118,7 @@ class ExpenseRecord extends Component {
       tag: Alimentacao,
       exchangeRates: {},
     });
+    saveIdOfExpenseToBeEditedRedux(NEGATIVE_NUMBER_ONE);
   }
 
   render() {
@@ -220,6 +223,8 @@ const mapDispatchToProps = (dispatch) => ({
     (expensesRedux, componentState) => dispatch(
       editExpense(expensesRedux, componentState),
     ),
+  saveIdOfExpenseToBeEditedRedux:
+    (idExpense) => dispatch(saveIdOfExpenseToBeEdited(idExpense)),
 });
 
 ExpenseRecord.propTypes = {
@@ -236,6 +241,7 @@ ExpenseRecord.propTypes = {
   editExpenseId: PropTypes.number.isRequired,
   editExpenseRedux: PropTypes.func.isRequired,
   actionSaveExpenseInRedux: PropTypes.func.isRequired,
+  saveIdOfExpenseToBeEditedRedux: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseRecord);
